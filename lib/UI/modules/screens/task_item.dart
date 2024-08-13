@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:provider/provider.dart';
 import 'package:todo_app/UI/core/app_colors.dart';
+import 'package:todo_app/provider/theme_provider.dart';
 
 class TaskItem extends StatelessWidget {
   const TaskItem({super.key});
 
   @override
   Widget build(BuildContext context) {
+    var pro=Provider.of<ThemeProvider>(context);
     return Container(
       width: double.infinity,
       height: 115,
       margin: EdgeInsets.symmetric(horizontal: 15),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
-        color: Colors.white,
+        color:pro.mode==ThemeMode.light? Colors.white:AppColors.darkPrimary,
 
       ),
 
@@ -59,8 +62,8 @@ class TaskItem extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Task Title",style: TextStyle(fontSize: 25,color: AppColors.primary),),
-                  Text("Task descreption",style: TextStyle(fontSize: 20,color: AppColors.grye)),
+                  Text("Task Title",style: Theme.of(context).textTheme.bodyMedium,),
+                  Text("Task descreption",style: Theme.of(context).textTheme.bodySmall),
                 ],
               ),
             ),
