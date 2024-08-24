@@ -2,18 +2,15 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/UI/core/app_colors.dart';
+import 'package:todo_app/UI/core/models/firebase_models.dart';
 import 'package:todo_app/provider/main_provider.dart';
 import 'package:todo_app/provider/theme_provider.dart';
 
-class TaskBottomSheet extends StatefulWidget {
-   const TaskBottomSheet({super.key});
+class EditBottomSheet extends StatelessWidget {
+  TaskModel taskModel;
 
-  @override
-  State<TaskBottomSheet> createState() => _TaskBottomSheetState();
-}
+   EditBottomSheet({super.key,required this.taskModel});
 
-  DateTime selectedDate=DateTime.now();
-class _TaskBottomSheetState extends State<TaskBottomSheet> {
   @override
   Widget build(BuildContext context) {
     return Consumer<MainProvider>(
@@ -21,10 +18,10 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
         var pro=Provider.of<ThemeProvider>(context);
         return Container(
           padding: EdgeInsets.all(20),
-          height: 468,
+          height: 477,
           width: double.infinity,
           decoration: BoxDecoration(
-            // color: pro.mode==ThemeMode.light?Colors.white:AppColors.darkPrimary
+              color: pro.mode==ThemeMode.light?Colors.white:AppColors.darkPrimary
 
           ),
           child: Column(
@@ -32,7 +29,7 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
-                "addTask".tr(),
+                "editTask".tr(),
                 style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               ),
@@ -40,7 +37,9 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
                 height: 30,
               ),
               TextFormField(
-                controller: provider.titleController,
+                onChanged: (val){
+                  taskModel.title=val;
+                },
                 decoration: InputDecoration(
                     label: Text(
                       "taskTitle".tr(),
@@ -55,7 +54,9 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
                 height: 20,
               ),
               TextFormField(
-                controller: provider.descController,
+                onChanged: (val){
+                  taskModel.desc=val;
+                },
                 decoration: InputDecoration(
                     label: Text(
                       "taskDesc".tr(),
@@ -83,9 +84,8 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
                       initialDate: provider.selectedDatePiker,
                       firstDate: DateTime.now(),
                       lastDate: DateTime.now().add(Duration(days: 365))).then((value) {
-                        return provider.setDatePiker(value!);
+                    return provider.setDatePiker(value!);
                   });
-                  print(provider.selectedDatePiker);
                 },
                 child: Text(
                   provider.selectedDatePiker.toString().substring(0,10),
@@ -93,8 +93,6 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
                   textAlign: TextAlign.center,
                 ),
               ),
-
-
               Text(
                 "time".tr(),
                 style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
@@ -104,28 +102,30 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
               ),
               InkWell(
                 onTap: () {
-
-                showTimePicker(context: context, initialTime: provider.selectedTime).then((value) {
-                  provider.setTime(value!);
-                });
+                  showTimePicker(context: context, initialTime: provider.selectedTime).then((value) {
+                    provider.setTime(value!);
+                  });
                 },
                 child: Text(
-                "${provider.selectedTime.hour}: ${provider.selectedTime.minute}",
+                 "${provider.selectedTime.hour}:${provider.selectedTime.minute}",
                   style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
                   textAlign: TextAlign.center,
                 ),
               ),
-             Spacer(),
+              SizedBox(
+                height: 15,
+              ),
               ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(25))),
                   onPressed: () {
-                    provider.addTask();
+                    taskModel.time=provider.selectedTime.toString().substring(10,15);
+                    provider.editTask(taskModel);
                     Navigator.pop(context);
                   },
                   child: Text(
-                    "add".tr(),
+                    "update".tr(),
                     style: TextStyle(fontSize: 25),
                   ))
             ],
@@ -134,5 +134,6 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
       },
     );
   }
-
 }
+
+

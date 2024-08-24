@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/provider/theme_provider.dart';
@@ -25,7 +26,7 @@ class ModeBottomSheet extends StatelessWidget {
               },
               child: Row(
                 children: [
-                  Text("Light",style: Theme.of(context).textTheme.bodyMedium,),
+                  Text("light".tr(),style: Theme.of(context).textTheme.bodyMedium,),
                   Spacer(),
                   pro.mode==ThemeMode.light?Icon(Icons.done):SizedBox()
                 ],
@@ -39,7 +40,7 @@ class ModeBottomSheet extends StatelessWidget {
               },
               child: Row(
                 children: [
-                  Text("Dark",style: Theme.of(context).textTheme.bodyMedium,),
+                  Text("dark".tr(),style: Theme.of(context).textTheme.bodyMedium,),
                   Spacer(),
                  pro.mode==ThemeMode.dark? Icon(Icons.done):SizedBox()
                 ],

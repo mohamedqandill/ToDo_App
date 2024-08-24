@@ -1,5 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:todo_app/UI/modules/screens/create_account_screen.dart';
 import 'package:todo_app/UI/modules/screens/home_screen.dart';
+import 'package:todo_app/UI/modules/screens/login_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   static const String routeName = "/";
@@ -15,8 +18,15 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     Future.delayed(
       Duration(seconds: 2),
-      () => Navigator.pushNamedAndRemoveUntil(
-          context, HomeScreen.routeName, (route) => false),
+      () {
+        if(FirebaseAuth.instance.currentUser !=null){
+          Navigator.pushNamedAndRemoveUntil(context, HomeScreen.routeName, (route) => false);
+        }
+        else{
+          Navigator.pushNamedAndRemoveUntil(
+              context, LoginScreen.routeName, (route) => false);
+        }
+      }
     );
     // TODO: implement initState
     super.initState();

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class LanguageBottomSheet extends StatelessWidget {
@@ -15,20 +16,30 @@ class LanguageBottomSheet extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
 
           children: [
-            Row(
-              children: [
-                Text("English",style: Theme.of(context).textTheme.bodyMedium,),
-                Spacer(),
-                Icon(Icons.done)
-              ],
+            InkWell(
+              onTap: (){
+                context.setLocale(Locale("en"));
+              },
+              child: Row(
+                children: [
+                  Text("english".tr(),style: Theme.of(context).textTheme.bodyMedium,),
+                  Spacer(),
+                  context.locale==Locale("en")?Icon(Icons.done):SizedBox()
+                ],
+              ),
             ),
 
-            Row(
-              children: [
-                Text("Arabic",style: Theme.of(context).textTheme.bodyMedium,),
-                Spacer(),
-                Icon(Icons.done)
-              ],
+            InkWell(
+              onTap: (){
+                context.setLocale(Locale("ar"));
+              },
+              child: Row(
+                children: [
+                  Text("arabic".tr(),style: Theme.of(context).textTheme.bodyMedium,),
+                  Spacer(),
+                  context.locale==Locale("ar")?Icon(Icons.done):SizedBox()
+                ],
+              ),
             )
           ],
 

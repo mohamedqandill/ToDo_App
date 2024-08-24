@@ -1,0 +1,23 @@
+
+
+
+
+{
+  "addTask": "Add New Task",
+  "taskTitle": "Task Title",
+  "taskDesc": "Task Descreption",
+  "date": "Select Date",
+  "time": "Select Time",
+  "add": "Add",
+  "Language": "Language",
+  "arabic": "Arabic",
+  "english": "English",
+  "Theme": "Theme",
+  "light": "Light",
+  "dark": "Dark",
+  "done": "Done..!",
+  "edit": "Edit",
+  "delete": "Delete",
+  "editTask": "Edit Task",
+  "update": "Update"
+}

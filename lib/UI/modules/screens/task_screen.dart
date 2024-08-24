@@ -1,7 +1,10 @@
-import 'package:calendar_timeline/calendar_timeline.dart';
+
+import 'package:easy_date_timeline/easy_date_timeline.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/UI/core/app_colors.dart';
+import 'package:todo_app/UI/core/models/firebase_models.dart';
 import 'package:todo_app/UI/modules/screens/task_item.dart';
 import 'package:todo_app/provider/main_provider.dart';
 import 'package:todo_app/provider/theme_provider.dart';
@@ -27,38 +30,64 @@ class TaskScreen extends StatelessWidget {
                     height: 50,
                     color: AppColors.primary,
                   ),
-                  CalendarTimeline(
-                    initialDate: DateTime.now(),
-                    firstDate: DateTime.now().subtract(Duration(days: 365)),
-                    lastDate: DateTime.now().add(Duration(days: 365)),
-                    onDateSelected: (p0) =>provider.setDate,
+                  EasyInfiniteDateTimeLine(
 
-                    leftMargin: 90,
-                    monthColor: Colors.white,
-                    dayColor: AppColors.primary,
-                    activeDayColor: Colors.white,
-                    activeBackgroundDayColor: pro.mode==ThemeMode.light?AppColors.primary:AppColors.darkPrimary,
-                    // dotsColor: Color(0xFF333A47),
-                    selectableDayPredicate: (date) => date.day != 23,
-                    locale: 'en_ISO',
-                  )
+                      firstDate:FirebaseAuth.instance.currentUser!.metadata.creationTime! ,
+                      focusDate:provider.setDateTime ,
+                      lastDate:DateTime.now().add(Duration(days: 365)),
+                    onDateChange: provider.setDate,
+
+                    dayProps: EasyDayProps(
+                      inactiveDayStyle: DayStyle(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color:Colors.white
+                        )
+                      )
+                    ),
+                  ),
+
                 ],
               ),
               SizedBox(height: 30,),
 
-              Expanded(
-                child: ListView.separated(itemBuilder: (context, index) {
-                  return TaskItem();
 
-                }, separatorBuilder: (context, index) => SizedBox(height: 20,), itemCount: 30),
-              )
+
+              StreamBuilder(
+                stream: provider.getTask(), builder: (context, snapshot) {
+                if(snapshot.connectionState==ConnectionState.waiting){
+                  return Center(child: CircularProgressIndicator(),);
+                }
+                else if(snapshot.hasError){
+                  return Text("has Error");
+                }
+                else{
+
+                  List<TaskModel> tasks=snapshot.data!.docs.map((e) => e.data()).toList();
+                  print("tasks:$tasks");
+
+
+
+                  return Expanded(
+                    child: ListView.separated(
+                      separatorBuilder: (context, index) => SizedBox(height: 15,),
+                      itemCount: tasks.length,
+                      itemBuilder: (context, index) {
+                      return TaskItem(taskModel:tasks[index],);
+                    },
+                    ),
+                  );
+                }
+              },
+              ),
+
 
             ],
           ),
 
 
         );
-      },
+      }
     );
   }
 }

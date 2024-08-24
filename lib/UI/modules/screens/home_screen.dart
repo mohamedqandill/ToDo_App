@@ -18,7 +18,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return ChangeNotifierProvider(
-      create: (context) => MainProvider(),
+      create: (context) => MainProvider()..getUser(),
       child: Selector<MainProvider,int>(
         selector: (p0, p1) => p1.selectedIndex,
         builder: (context, selectedIndex, child) {
@@ -31,7 +31,7 @@ class HomeScreen extends StatelessWidget {
               toolbarHeight: 70,
               elevation: 0,
               title: Text(
-                "ToDo App",
+                "Hi, ${provider.user?.name??""}".toUpperCase(),
                 style: Theme.of(context).textTheme.titleLarge,
               ),
               // centerTitle: true,
@@ -45,6 +45,13 @@ class HomeScreen extends StatelessWidget {
               ),
               onPressed: (){
                 showModalBottomSheet(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(topLeft: Radius.circular(42),topRight: Radius.circular(42))
+                  ),
+                  isDismissible: true,
+                  elevation: 5,
+                  showDragHandle: true,
+                  backgroundColor:  pro.mode==ThemeMode.light?Colors.white:AppColors.darkPrimary,
                   isScrollControlled: true,
                   context: context, builder: (context) {
                   return Padding(
