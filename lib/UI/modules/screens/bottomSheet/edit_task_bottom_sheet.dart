@@ -10,6 +10,8 @@ class EditBottomSheet extends StatelessWidget {
   TaskModel taskModel;
 
    EditBottomSheet({super.key,required this.taskModel});
+  GlobalKey<FormState> formKey=GlobalKey<FormState>();
+
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +20,7 @@ class EditBottomSheet extends StatelessWidget {
         var pro=Provider.of<ThemeProvider>(context);
         return Container(
           padding: EdgeInsets.all(20),
-          height: 477,
+          height: 510,
           width: double.infinity,
           decoration: BoxDecoration(
               color: pro.mode==ThemeMode.light?Colors.white:AppColors.darkPrimary
@@ -37,6 +39,11 @@ class EditBottomSheet extends StatelessWidget {
                 height: 30,
               ),
               TextFormField(
+                validator: (value) {
+                  if(value==null||value.trim().isEmpty){
+                    return "invalid title";
+                  }
+                },
                 onChanged: (val){
                   taskModel.title=val;
                 },
@@ -54,6 +61,11 @@ class EditBottomSheet extends StatelessWidget {
                 height: 20,
               ),
               TextFormField(
+                validator: (value) {
+                  if(value==null||value.trim().isEmpty){
+                    return "invalid descreption";
+                  }
+                },
                 onChanged: (val){
                   taskModel.desc=val;
                 },
@@ -112,9 +124,8 @@ class EditBottomSheet extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
               ),
-              SizedBox(
-                height: 15,
-              ),
+
+              Spacer(),
               ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/UI/modules/screens/create_account_screen.dart';
@@ -30,7 +31,7 @@ class LoginScreen extends StatelessWidget {
                       flex: 2,
                     ),
                     Text(
-                      "Login",
+                      "login".tr(),
                       style: theme.titleMedium,
                     ),
                     SizedBox(
@@ -41,39 +42,55 @@ class LoginScreen extends StatelessWidget {
                     ),
                     CustomField(
                         controller:provider.emailController ,
-                        text: "Email",icon: IconButton(onPressed: (){}, icon: SizedBox())),
+                        text: "email".tr(),icon: IconButton(onPressed: (){}, icon: SizedBox())),
                     SizedBox(
                       height: 30,
                     ),
                     CustomField(
                         controller: provider.passwordController,
-                        text: "Password",icon: IconButton(onPressed: (){}, icon: SizedBox())),
+                        text: "pass".tr(),icon: IconButton(onPressed: (){}, icon: SizedBox())),
                     SizedBox(height: 20,),
 
-                    ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            fixedSize: Size(250, 35),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20))),
-                        onPressed: () {
-                          provider.Login(context);
-                        },
-                        child: Text(
-                          "Login",
-                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                        )),
+                    InkWell(
+                      onTap: (){
+                        provider.Login(context);
+
+
+                      },
+                      child: Container(
+                        width: double.infinity,
+                        height: 50,
+                        padding: EdgeInsets.all(7),
+                        decoration: BoxDecoration(
+                            color: Colors.blue,
+                            borderRadius: BorderRadius.circular(22)
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "login".tr(),
+                              style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold, fontSize: 25),
+                            ),
+                            Icon(Icons.logout,size: 30,color: Colors.black,)
+                          ],
+                        ),
+                      ),
+
+                    ),
+                    SizedBox(height: 20,),
                     InkWell(
                         onTap: (){
                           provider.resetPassword();
                         },
-                        child: Text("Forget Password..?",style: TextStyle(fontSize: 21,fontWeight: FontWeight.bold),)),
+                        child: Text("forget".tr(),style: TextStyle(fontSize: 21,fontWeight: FontWeight.bold),)),
                     Spacer(),
                     InkWell(
                         onTap: (){
                           Navigator.pushNamed(context, CreateAccountScreen.routeName);
                         },
                         child: Text(
-                          "you not have an account..? Create Account",
+                          "check2".tr(),
                           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                         ))
                   ],

@@ -68,7 +68,7 @@ class TaskScreen extends StatelessWidget {
 
 
 
-                  return Expanded(
+                  return tasks.isEmpty? Center( heightFactor: 10,child: Text("No Tasks in this day"),):Expanded(
                     child: ListView.separated(
                       separatorBuilder: (context, index) => SizedBox(height: 15,),
                       itemCount: tasks.length,

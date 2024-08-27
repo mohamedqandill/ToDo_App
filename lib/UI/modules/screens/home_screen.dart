@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/UI/core/Theme/app_theme.dart';
@@ -31,7 +32,7 @@ class HomeScreen extends StatelessWidget {
               toolbarHeight: 70,
               elevation: 0,
               title: Text(
-                "Hi, ${provider.user?.name??""}".toUpperCase(),
+                "${"hi".tr()}, ${provider.user?.name??""}".toUpperCase(),
                 style: Theme.of(context).textTheme.titleLarge,
               ),
               // centerTitle: true,

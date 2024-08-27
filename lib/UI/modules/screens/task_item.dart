@@ -58,7 +58,10 @@ class TaskItem extends StatelessWidget {
                       context: context,
                       builder: (context) {
                         return ChangeNotifierProvider.value(
-                            value: provider, child: EditBottomSheet(taskModel:taskModel ,));
+                            value: provider, child: Padding(
+                            padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+
+                            child: EditBottomSheet(taskModel:taskModel ,)));
                       },
                     );
                   },
